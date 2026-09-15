@@ -1,0 +1,16 @@
+Re=10 N=  8 Nt=  6 L2err=1.175e-01 KEerr=1.146e-02 rate 2.3810 vs 2.5133
+Re=10 N= 16 Nt= 11 L2err=2.900e-02 KEerr=2.834e-03 rate 2.4789 vs 2.5133
+Re=100 N= 32 Nt= 21 L2err=6.608e-03 KEerr=7.360e-04 rate 0.2504 vs 0.2513
+Re=100 N= 64 Nt= 41 L2err=1.657e-03 KEerr=1.858e-04 rate 0.2511 vs 0.2513
+Re=100 N=128 Nt= 82 L2err=4.144e-04 KEerr=4.647e-05 rate 0.2513 vs 0.2513
+Re=1000 N=128 Nt= 82 L2err=4.139e-04 KEerr=5.831e-06 rate 0.0251 vs 0.0251
+Re=1000 N=256 Nt=163 L2err=1.035e-04 KEerr=1.461e-06 rate 0.0251 vs 0.0251
+perturbed Re=10 N=8 eps_pert=0.05: NC1 err=7.627e-03 NC2 err=7.380e-03
+perturbed Re=10 N=8 eps_pert=0.2: NC1 err=1.097e-02 NC2 err=7.819e-03
+perturbed Re=10 N=16 eps_pert=0.05: NC1 err=3.256e-03 NC2 err=2.605e-03
+perturbed Re=10 N=16 eps_pert=0.2: NC1 err=8.345e-03 NC2 err=2.940e-03
+perturbed Re=100 N=8 eps_pert=0.05: NC1 err=1.156e-02 NC2 err=2.291e-03
+perturbed Re=100 N=8 eps_pert=0.2: NC1 err=4.517e-02 NC2 err=6.536e-03
+perturbed Re=100 N=16 eps_pert=0.05: NC1 err=1.618e-02 NC2 err=3.617e-03
+perturbed Re=100 N=16 eps_pert=0.2: NC1 err=6.382e-02 NC2 err=1.409e-02
+wrote results/error_scaling.json

@@ -1,0 +1,32 @@
+[N=4 NC=1 Re=10.0] dim=64 Nt=3 n_sys=7 decomp-residual=1.3e-16
+  ||L||=1.87 ||L^-1||=2.87 kappa=5.366 Lambda=1.431 alpha2=1.9
+  alpha3=5.061 (bound 5.441) in 0s
+  wrote N4_NC1_Re10.json in 16s
+[N=4 NC=1 Re=100.0] dim=64 Nt=3 n_sys=7 decomp-residual=1.2e-16
+  ||L||=1.872 ||L^-1||=2.764 kappa=5.173 Lambda=1.183 alpha2=1.375
+  alpha3=3.098 (bound 3.255) in 0s
+  wrote N4_NC1_Re100.json in 16s
+[N=4 NC=2 Re=10.0] dim=1088 Nt=3 n_sys=12 decomp-residual=1.5e-16
+  ||L||=1.885 ||L^-1||=2.866 kappa=5.403 Lambda=2.147 alpha2=4.037
+  alpha3=13.18 (bound 17.34) in 8s
+  wrote N4_NC2_Re10.json in 27s
+[N=4 NC=2 Re=100.0] dim=1088 Nt=3 n_sys=12 decomp-residual=1.3e-16
+  ||L||=1.879 ||L^-1||=2.664 kappa=5.006 Lambda=1.425 alpha2=2.328
+  alpha3=5.872 (bound 6.635) in 8s
+  wrote N4_NC2_Re100.json in 24s
+[N=8 NC=1 Re=10.0] dim=448 Nt=6 n_sys=10 decomp-residual=1.2e-16
+  ||L||=1.927 ||L^-1||=4.758 kappa=9.168 Lambda=1.716 alpha2=2.976
+  alpha3=10.16 (bound 10.21) in 0s
+  wrote N8_NC1_Re10.json in 35s
+[N=8 NC=1 Re=100.0] dim=448 Nt=6 n_sys=10 decomp-residual=1.2e-16
+  ||L||=1.925 ||L^-1||=4.554 kappa=8.764 Lambda=1.158 alpha2=1.464
+  alpha3=3.359 (bound 3.39) in 0s
+  wrote N8_NC1_Re100.json in 34s
+[N=8 NC=2 Re=10.0] dim=29120 Nt=6 n_sys=16 decomp-residual=1.8e-16
+  ||L||=2.482 ||L^-1||=4.768 kappa=11.83 Lambda=2.352 alpha2=4.678
+  alpha3=16.68 (bound 22) in 81s
+  wrote N8_NC2_Re10.json in 154s
+[N=8 NC=2 Re=100.0] dim=29120 Nt=6 n_sys=16 decomp-residual=1.4e-16
+  ||L||=1.929 ||L^-1||=4.608 kappa=8.888 Lambda=1.394 alpha2=2.427
+  alpha3=6.251 (bound 6.769) in 98s
+  wrote N8_NC2_Re100.json in 158s

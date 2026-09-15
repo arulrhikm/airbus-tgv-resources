@@ -1,0 +1,10 @@
+[N=4 NC=2 Re=1000.0] dim=1088 Nt=3 n_sys=12 decomp-residual=1.4e-16
+  ||L||=1.88 ||L^-1||=2.844 kappa=5.348 Lambda=1.419 alpha2=2.315
+  alpha3=5.819 (bound 6.568) in 14s
+  wrote N4_NC2_Re1000.json in 43s
+[N=8 NC=2 Re=1000.0] dim=29120 Nt=6 n_sys=16 decomp-residual=1.4e-16
+  ||L||=1.929 ||L^-1||=4.604 kappa=8.883 Lambda=1.37 alpha2=2.369
+  alpha3=6.023 (bound 6.491) in 121s
+  wrote N8_NC2_Re1000.json in 192s
+[N=16 NC=2 Re=10.0] dim=789504 Nt=11 n_sys=21 decomp-residual=2.6e-16
+[N=16 NC=2 Re=10.0] dim=789504 Nt=11 n_sys=21 decomp-residual=2.6e-16

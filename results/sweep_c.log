@@ -1,0 +1,14 @@
+[N=16 NC=1 Re=10.0] dim=3072 Nt=11 n_sys=13 decomp-residual=1.4e-16
+  ||L||=2.791 ||L^-1||=7.934 kappa=22.15 Lambda=1.73 alpha2=3.071
+  alpha3=10.83 (bound 10.62) in 0s
+  wrote N16_NC1_Re10.json in 91s
+[N=16 NC=1 Re=100.0] dim=3072 Nt=11 n_sys=13 decomp-residual=1.2e-16
+  ||L||=1.939 ||L^-1||=7.683 kappa=14.9 Lambda=1.195 alpha2=1.608
+  alpha3=3.846 (bound 3.843) in 0s
+  wrote N16_NC1_Re100.json in 62s
+[N=16 NC=1 Re=1000.0] dim=3072 Nt=11 n_sys=13 decomp-residual=1.2e-16
+  ||L||=1.939 ||L^-1||=7.561 kappa=14.66 Lambda=1.148 alpha2=1.502
+  alpha3=3.453 (bound 3.448) in 0s
+  wrote N16_NC1_Re1000.json in 64s
+[N=32 NC=1 Re=10.0] dim=22528 Nt=21 n_sys=16 decomp-residual=2.1e-16
+[N=32 NC=1 Re=10.0] dim=22528 Nt=21 n_sys=16 decomp-residual=2.1e-16
