@@ -7,7 +7,7 @@
  "nu": 0.006283185307179587,
  "dim_carleman": 272,
  "dim": 1088,
- "n_qubits_system": 12,
+ "n_qubits_system": 11,
  "decomposition_residual": 1.3661235032761565e-16,
  "spectral": {
   "normL": 1.8804718272705285,
@@ -61,13 +61,13 @@
    "r_max": 43770.77518321249,
    "exps_per_sample": 875415.5036642498,
    "samples": 52423973.61719953,
-   "T_exp": 1524.0258093685761,
-   "T_per_sample": 1334155821.505708,
-   "T_total": 6.994174958784841e+16,
-   "logical_qubits": 62,
-   "depth_T_per_sample": 1334155821.505708,
-   "time_serial_s": 699417495878.4841,
-   "time_parallel_1000_s": 699417495.8784841
+   "T_exp": 1492.0258093685761,
+   "T_per_sample": 1306142525.388452,
+   "T_total": 6.8473181291266584e+16,
+   "logical_qubits": 61,
+   "depth_T_per_sample": 1306142525.388452,
+   "time_serial_s": 684731812912.6659,
+   "time_parallel_1000_s": 684731812.9126658
   },
   "eps0.01_task2": {
    "task": 2,
@@ -99,13 +99,13 @@
    "r_max": 87440.94099915797,
    "exps_per_sample": 1748818.8199831594,
    "samples": 104677225434.33333,
-   "T_exp": 1539.7275308966525,
-   "T_per_sample": 2692704483.6782675,
-   "T_total": 2.8186483426603015e+20,
-   "logical_qubits": 62,
-   "depth_T_per_sample": 2692704483.6782675,
-   "time_serial_s": 2818648342660301.5,
-   "time_parallel_1000_s": 2818648342660.3013
+   "T_exp": 1507.7275308966525,
+   "T_per_sample": 2636742281.4388065,
+   "T_total": 2.760068662064083e+20,
+   "logical_qubits": 61,
+   "depth_T_per_sample": 2636742281.4388065,
+   "time_serial_s": 2760068662064083.5,
+   "time_parallel_1000_s": 2760068662064.0835
   },
   "eps0.001_task1": {
    "task": 1,
@@ -137,13 +137,13 @@
    "r_max": 77729.8271612007,
    "exps_per_sample": 1554596.5432240139,
    "samples": 8239658469.09657,
-   "T_exp": 1537.03256678187,
-   "T_per_sample": 2389465515.141828,
-   "T_total": 1.9688379768452563e+19,
-   "logical_qubits": 62,
-   "depth_T_per_sample": 2389465515.141828,
-   "time_serial_s": 196883797684525.66,
-   "time_parallel_1000_s": 196883797684.52567
+   "T_exp": 1505.03256678187,
+   "T_per_sample": 2339718425.75866,
+   "T_total": 1.9278480742103634e+19,
+   "logical_qubits": 61,
+   "depth_T_per_sample": 2339718425.75866,
+   "time_serial_s": 192784807421036.34,
+   "time_parallel_1000_s": 192784807421.03635
   },
   "eps0.001_task2": {
    "task": 2,
@@ -175,13 +175,13 @@
    "r_max": 137511.4545284105,
    "exps_per_sample": 2750229.09056821,
    "samples": 14788340063566.396,
-   "T_exp": 1552.0267124814443,
-   "T_per_sample": 4268429014.005411,
-   "T_total": 6.312297979630543e+22,
-   "logical_qubits": 62,
-   "depth_T_per_sample": 4268429014.005411,
-   "time_serial_s": 6.312297979630543e+17,
-   "time_parallel_1000_s": 631229797963054.4
+   "T_exp": 1520.0267124814443,
+   "T_per_sample": 4180421683.1072288,
+   "T_total": 6.18214974588963e+22,
+   "logical_qubits": 61,
+   "depth_T_per_sample": 4180421683.1072288,
+   "time_serial_s": 6.182149745889631e+17,
+   "time_parallel_1000_s": 618214974588963.1
   }
  }
 }

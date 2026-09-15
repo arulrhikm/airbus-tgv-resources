@@ -74,7 +74,8 @@ def extrapolate_spec(rows, NC, Re, N_target):
     n2 = N_target**2
     dim_c = n2 + (N_target**4 if NC == 2 else 0)
     Nt = int(math.ceil(1.0 / (0.5 * (2 * math.pi / N_target) / 2)))   # cfl=0.5, |Uc|+V0 = 2, T=1
-    n_sys = int(math.ceil(math.log2(2 * dim_c * (Nt + 1))))
+    n_sys = int(math.ceil(math.log2(dim_c * (Nt + 1))))   # system register only; dilation + Hadamard
+    #                                                       ancillas are added by ret_cost / schro_cost
     out["Nt"], out["n_sys"], out["dim"] = Nt, n_sys, dim_c * (Nt + 1)
     out["extrapolated"] = N_target not in Ns
     return out, fits
@@ -325,6 +326,8 @@ def write_numbers(summary):
         put("demoqubits", str(d["n_qubits"])); put("demokappa", f"{d['kappa']:.3g}")
         put("demoK", sci(d["K_fourier"], 0)); put("democ", f"{d['c_l1']:.3g}"); put("demoS", f"{d['S']:.3g}")
         put("demotarget", f"{d['overlap_exact']:.4f}")
+        put("demotargetabs", f"{d['target_abs']:.4f}")     # ||L|| x normalised overlap: what is estimated
+        put("demonormL", f"{d['normL']:.3g}")
         put("demosteps", str(d["richardson"]["max_trotter_steps"]))
         put("demobias", sci(d["fourier_richardson_error"]))
         nmax = max(int(k) for k in d["error_vs_samples"])

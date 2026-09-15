@@ -296,7 +296,7 @@ def ret_cost(spec: dict, n_qubits_system: int, eps: float, task: int = 2, gm: di
     T_exp = gm["T_per_toffoli"] * (8 * n_reg + gm["b_arith"] ** 2) + 3 * math.log2(1 / eps_rot)
     T_per_sample = exps_per_sample * T_exp
     T_total = T_per_sample * samples
-    qubits = n_reg + 1 + 1 + 3 * gm["b_arith"]        # dilation + Hadamard ancilla + arithmetic workspace
+    qubits = n_reg + 2 + 3 * gm["b_arith"]            # + dilation + Hadamard ancilla + arithmetic workspace
     return dict(task=task, eps=eps, eps_F=eps_F, eps_R=eps_R, fourier=fs, m=m, qgrid=qgrid,
                 b_norm1=b1, richardson_base=base, growth=growth, r_max=r_max,
                 exps_per_sample=exps_per_sample, samples=samples, T_exp=T_exp,
@@ -312,7 +312,8 @@ def run(N: int, NC: int, Re: float, order3: bool, tol: float, eps_list, tag: str
     rng = np.random.default_rng(0)
     ps = pieces(g)
     res = dict(N=N, NC=NC, Re=Re, Nt=g.Nt, dt=g.dt, nu=g.nu, dim_carleman=g.dim_c, dim=g.dim,
-               n_qubits_system=int(math.ceil(math.log2(2 * g.dim))),   # dilated
+               n_qubits_system=int(math.ceil(math.log2(g.dim))),   # space-time Carleman register (the
+               # dilation and Hadamard ancillas are added on top of this in ret_cost)
                decomposition_residual=check_decomposition(g, ps, rng))
     print(f"[N={N} NC={NC} Re={Re}] dim={g.dim} Nt={g.Nt} n_sys={res['n_qubits_system']} "
           f"decomp-residual={res['decomposition_residual']:.1e}", flush=True)

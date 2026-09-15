@@ -7,7 +7,7 @@
  "nu": 0.006283185307179587,
  "dim_carleman": 1024,
  "dim": 22528,
- "n_qubits_system": 16,
+ "n_qubits_system": 15,
  "decomposition_residual": 1.2170001818869895e-16,
  "spectral": {
   "normL": 1.9472192402731394,
