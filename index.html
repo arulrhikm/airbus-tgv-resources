@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resource estimates for the 2D convecting Taylor–Green vortex</title>
+<meta name="description" content="Explicit-constant quantum resource estimates for the 2D convecting Taylor-Green vortex with a one-ancilla, block-encoding-free solver. Figures, data and scaling fits.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#127744;</text></svg>">
+<style>
+  :root {
+    --bg: #fbfbfa;
+    --panel: #ffffff;
+    --ink: #1a1a1a;
+    --muted: #6b6b6b;
+    --line: #e2e2df;
+    --accent: #2f5fa8;
+    --accent-soft: #eaf0fa;
+    --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141414;
+      --panel: #1c1c1c;
+      --ink: #e8e8e6;
+      --muted: #9a9a96;
+      --line: #2e2e2e;
+      --accent: #7aa7e8;
+      --accent-soft: #1e2a3d;
+    }
+    img.fig { filter: invert(1) hue-rotate(180deg); }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1020px; margin: 0 auto; padding: 0 16px 96px; }
+  header { padding: 56px 0 32px; border-bottom: 1px solid var(--line); }
+  h1 { font-size: clamp(24px, 4vw, 34px); line-height: 1.25; margin: 0 0 12px; font-weight: 650; letter-spacing: -0.01em; }
+  .sub { color: var(--muted); max-width: 66ch; margin: 0 0 20px; }
+  .links a {
+    display: inline-block; margin: 0 14px 6px 0; color: var(--accent);
+    text-decoration: none; font-size: 14px; font-weight: 500;
+  }
+  .links a:hover { text-decoration: underline; }
+  h2 {
+    font-size: 13px; text-transform: uppercase; letter-spacing: 0.09em;
+    color: var(--muted); font-weight: 600; margin: 56px 0 16px;
+  }
+  h3 { font-size: 17px; font-weight: 600; margin: 32px 0 10px; }
+  p { max-width: 72ch; }
+  code, .num { font-family: var(--mono); font-size: 0.92em; }
+  a { color: var(--accent); }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+  .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; }
+  .stat .v { font-family: var(--mono); font-size: 22px; font-weight: 600; letter-spacing: -0.02em; }
+  .stat .v sup { font-size: 0.62em; }
+  .stat .k { color: var(--muted); font-size: 12.5px; margin-top: 6px; line-height: 1.4; }
+
+  figure { margin: 0 0 36px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px; }
+  figure img { width: 100%; height: auto; display: block; border-radius: 4px; }
+  figcaption { color: var(--muted); font-size: 13.5px; margin-top: 14px; line-height: 1.55; }
+  figcaption b { color: var(--ink); font-weight: 600; }
+
+  .controls { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; align-items: center; }
+  .controls label { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+  select {
+    font: inherit; font-size: 13px; padding: 5px 8px; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--panel); color: var(--ink);
+  }
+  .scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+  th, td { padding: 8px 12px; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--line); }
+  th {
+    position: sticky; top: 0; background: var(--panel); text-align: right;
+    font-weight: 600; font-size: 12px; color: var(--muted); letter-spacing: 0.02em;
+  }
+  th:first-child, td:first-child { text-align: left; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: var(--accent-soft); }
+  td.n { font-family: var(--mono); }
+  td.n sup { font-size: 0.7em; }
+  .tag {
+    font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em;
+    padding: 2px 6px; border-radius: 4px; background: var(--accent-soft); color: var(--accent);
+  }
+  .note { color: var(--muted); font-size: 13px; margin-top: 10px; }
+  pre {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: 16px 18px; overflow-x: auto; font-family: var(--mono); font-size: 13px; line-height: 1.7;
+  }
+  pre .c { color: var(--muted); }
+  footer { margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13.5px; }
+  #err { display: none; background: var(--accent-soft); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Resource estimates for the 2D convecting Taylor–Green vortex</h1>
+  <p class="sub">
+    Code and data behind the Phase&nbsp;1 concept proposal <i>Explicit-constant resource estimates for the
+    2D convecting Taylor–Green vortex with a one-ancilla, block-encoding-free quantum solver</i>
+    (2026 Global Quantum&nbsp;+&nbsp;AI Challenge, Airbus problem statement “Quantum Solvers: Enhancing
+    Predictive Aerodynamic Modeling Capabilities”).
+  </p>
+  <p class="links">
+    <a href="https://github.com/arulrhikm/airbus-tgv-resources">Repository ↗</a>
+    <a href="https://arxiv.org/abs/2608.13862">RET paper — arXiv:2608.13862 ↗</a>
+    <a href="results/summary.json">summary.json</a>
+    <a href="LICENSE">MIT licence</a>
+  </p>
+</header>
+
+<div id="err">
+  Could not load <code>results/summary.json</code>. The numbers and tables on this page are read from it at
+  load time; if you are opening this file directly from disk, serve the directory over HTTP instead
+  (<code>python -m http.server</code>).
+</div>
+
+<h2>Headline</h2>
+<div class="stats" id="stats"></div>
+<p class="note">
+  The solver is a Carleman-linearised, Crank–Nicolson finite-volume discretisation of the 2D convecting
+  Taylor–Green vortex, assembled into one space-time linear system and solved with Randomized Extrapolation
+  Trotterization (RET) as the matrix-inverse primitive. Every constant in the resource model — condition
+  number, Trotter-term norms, nested-commutator norms — is computed on the assembled matrices rather than
+  bounded analytically.
+</p>
+
+<h2>Figures</h2>
+
+<figure>
+  <img class="fig" src="figs/fig1_airbus_scaling.png" alt="Time-to-solution, memory and error scaling against Reynolds number">
+  <figcaption>
+    <b>Figure 1 — the three Airbus axes.</b> (a) total T-gates at ε&nbsp;=&nbsp;10<sup>−2</sup> against Re,
+    with serial run time on the right-hand axis; (b) logical qubits; (c) relative error at t&nbsp;=&nbsp;1.
+    Both Carleman truncation orders and both estimation tasks are shown, together with the
+    Schrödingerisation arm as a bound. <a href="figs/fig1_airbus_scaling.pdf">PDF</a>
+  </figcaption>
+</figure>
+
+<figure>
+  <img class="fig" src="figs/fig2_crossover.png" alt="Quantum gate count against classical flops as a function of Reynolds number">
+  <figcaption>
+    <b>Figure 2 — crossover.</b> Quantum gates against the flop count of the equivalent classical
+    finite-volume solve, at ε&nbsp;=&nbsp;10<sup>−2</sup> and 10<sup>−3</sup>.
+    <a href="figs/fig2_crossover.pdf">PDF</a>
+  </figcaption>
+</figure>
+
+<figure>
+  <img class="fig" src="figs/fig3_ret_demo.png" alt="Error in the estimated overlap against number of Hadamard-test samples">
+  <figcaption>
+    <b>Figure 3 — end-to-end demonstrator.</b> Error in ‖L‖⟨φ|L<sup>−1</sup>b⟩ against the number of
+    Hadamard-test samples for the 8-qubit TGV instance, with the CKS Fourier series and the Richardson
+    schedule both in place. <a href="figs/fig3_ret_demo.pdf">PDF</a>
+  </figcaption>
+</figure>
+
+<h2>Resource estimates</h2>
+<p>
+  One row per (N<sub>C</sub>, Re, ε, task) point. <b>Task&nbsp;1</b> estimates an overlap and costs
+  <span class="num">(c‖b‖<sub>1</sub>)<sup>2</sup></span> in samples; <b>Task&nbsp;2</b> estimates an
+  observable (kinetic-energy decay) and costs the fourth power. Rows marked <span class="tag">extrap</span>
+  use the N-extrapolated spectral constants rather than directly assembled ones.
+</p>
+<div class="controls">
+  <label>N<sub>C</sub> <select id="f-nc"><option value="">all</option><option>1</option><option>2</option></select></label>
+  <label>ε <select id="f-eps"><option value="">all</option><option value="0.01">10⁻²</option><option value="0.001">10⁻³</option></select></label>
+  <label>task <select id="f-task"><option value="">all</option><option value="1">1 — overlap</option><option value="2">2 — observable</option></select></label>
+  <span class="note" id="rowcount"></span>
+</div>
+<div class="scroll"><table id="points">
+  <thead><tr>
+    <th>N<sub>C</sub></th><th>Re</th><th>N</th><th>N<sub>t</sub></th><th>ε</th><th>task</th>
+    <th>κ</th><th>Λ</th><th>α₃</th><th>n<sub>sys</sub></th><th>logical qubits</th>
+    <th>T-gates</th><th>samples</th><th>serial (yr)</th><th>Schrö. T-gates</th>
+  </tr></thead>
+  <tbody></tbody>
+</table></div>
+<p class="note">
+  Gate model: <span id="gm"></span>
+</p>
+
+<h2>Scaling fits</h2>
+<p>
+  Power-law fits of the spectral constants in the grid size N, at fixed N<sub>C</sub> and Re
+  (exponent b in <span class="num">A·N<sup>b</sup></span>), from <code>fit_and_plot.py</code>.
+</p>
+<div class="scroll"><table id="fits">
+  <thead><tr>
+    <th>case</th><th>κ</th><th>Λ</th><th>α₂</th><th>α₃</th><th>Λ<sub>C</sub></th><th>N grid</th>
+  </tr></thead>
+  <tbody></tbody>
+</table></div>
+
+<h3>Total cost against Reynolds number</h3>
+<div class="scroll"><table id="tfits">
+  <thead><tr><th>case</th><th>exponent in Re</th><th>prefactor</th></tr></thead>
+  <tbody></tbody>
+</table></div>
+
+<h2>Accuracy of the discretisation</h2>
+<p>
+  Classical emulation of the same scheme against the analytic decaying vortex, from
+  <code>error_scaling.py</code>. Grid rule <span class="num" id="gridrule"></span> with
+  η&nbsp;=&nbsp;<span class="num" id="eta"></span>; rows at the rule are marked
+  <span class="tag">on rule</span>.
+</p>
+<div class="scroll"><table id="errs">
+  <thead><tr>
+    <th>Re</th><th>N</th><th>N<sub>t</sub></th><th>L₂ error at t=1</th><th>KE error at t=1</th>
+    <th>decay rate (fit)</th><th>decay rate (exact)</th><th></th>
+  </tr></thead>
+  <tbody></tbody>
+</table></div>
+
+<h3>Perturbed vortex</h3>
+<p>Relative L₂ error against a reference solve when the initial vortex is perturbed, at both Carleman orders.</p>
+<div class="scroll"><table id="perts">
+  <thead><tr>
+    <th>Re</th><th>N</th><th>perturbation</th><th>N<sub>C</sub>=1 rel. L₂</th><th>N<sub>C</sub>=2 rel. L₂</th>
+    <th>KE ratio (N<sub>C</sub>=2)</th><th>KE ratio (reference)</th>
+  </tr></thead>
+  <tbody></tbody>
+</table></div>
+
+<h2>End-to-end demonstrator</h2>
+<p>
+  A full RET run on the smallest instance — CKS Fourier series for 1/x, Richardson extrapolation schedule,
+  and Hadamard-test sampling — from <code>demo_ret.py</code>.
+</p>
+<div class="stats" id="demostats"></div>
+<h3>Convergence in the sample count</h3>
+<div class="scroll"><table id="demosamples">
+  <thead><tr><th>samples</th><th>estimate (real)</th><th>estimate (imag)</th><th>error</th></tr></thead>
+  <tbody></tbody>
+</table></div>
+
+<h2>Reproduce</h2>
+<pre><span class="c"># the JSON in results/ is committed, so the figures and every number
+# in the proposal reproduce without re-running the spectral sweeps</span>
+pip install -r requirements.txt
+
+python tgv_operator.py                          <span class="c"># self-tests: adjoints, inverses, F2 = 0 on the exact mode</span>
+python resources.py --N 4 8 --NC 1 2 --Re 10 100
+python resources.py --N 16 32 64 --NC 1 --Re 10 100 1000
+python resources.py --N 16 --NC 2 --Re 10 100 --no-order3
+python error_scaling.py                         <span class="c"># L2 and kinetic-energy error vs the analytic solution</span>
+python demo_ret.py                              <span class="c"># end-to-end RET run on the 8-qubit instance</span>
+python fit_and_plot.py                          <span class="c"># -&gt; figs/, and the LaTeX macros used in the proposal</span></pre>
+<p class="note">
+  The N&nbsp;=&nbsp;64 sweeps take a few hours. <code>richardson.py</code> is vendored from the numerics of
+  arXiv:2608.13862 (<a href="https://github.com/arulrhikm/numerics">github.com/arulrhikm/numerics</a>) and
+  keeps its own copyright line in <a href="LICENSE-richardson">LICENSE-richardson</a>.
+</p>
+
+<footer>
+  MIT licensed. Every figure and table on this page is rendered from
+  <a href="results/summary.json">results/summary.json</a> as committed in the repository.
+</footer>
+
+</div>
+
+<script>
+const YEAR = 3.15576e7;
+
+function sci(x, d) {
+  d = (d === undefined) ? 2 : d;
+  if (x === null || x === undefined || typeof x !== 'number' || !isFinite(x)) return '—';
+  if (x === 0) return '0';
+  const e = Math.floor(Math.log10(Math.abs(x)));
+  if (e >= -3 && e <= 4) return String(parseFloat(x.toPrecision(4)));
+  const m = x / Math.pow(10, e);
+  return m.toFixed(d) + '×10<sup>' + e + '</sup>';
+}
+const g = (x, p) => (typeof x === 'number' && isFinite(x)) ? String(parseFloat(x.toPrecision(p || 3))) : '—';
+const epsLabel = e => '10<sup>' + Math.round(Math.log10(e)) + '</sup>';
+
+function cell(html, cls) {
+  const td = document.createElement('td');
+  td.innerHTML = html;
+  if (cls) td.className = cls;
+  return td;
+}
+function row(tbody, cells) {
+  const tr = document.createElement('tr');
+  cells.forEach(c => tr.appendChild(c));
+  tbody.appendChild(tr);
+  return tr;
+}
+function stat(container, value, key) {
+  const d = document.createElement('div');
+  d.className = 'stat';
+  d.innerHTML = '<div class="v">' + value + '</div><div class="k">' + key + '</div>';
+  container.appendChild(d);
+}
+
+fetch('results/summary.json')
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then(render)
+  .catch(() => { document.getElementById('err').style.display = 'block'; });
+
+function render(S) {
+  const pts = S.points || [];
+  const tf = S.fits || {};
+  const demo = S.demo || {};
+
+  /* ---- headline ---- */
+  const host = document.getElementById('stats');
+  const cheapest = pts.filter(p => p.eps === 0.01 && p.task === 1)
+                      .sort((a, b) => a.T_total - b.T_total)[0];
+  const best = tf.Tscaling_NC2_task1, worst = tf.Tscaling_NC1_task2;
+
+  if (cheapest) {
+    stat(host, sci(cheapest.T_total),
+      'total T-gates at the cheapest point — N<sub>C</sub>=' + cheapest.NC + ', Re=' + g(cheapest.Re) +
+      ', N=' + cheapest.N + ', ε=10<sup>−2</sup>, overlap task');
+    stat(host, cheapest.logical_qubits,
+      'logical qubits there (' + cheapest.n_sys + ' system + ancillas)');
+  }
+  if (best) stat(host, 'Re<sup>' + best.exponent.toFixed(2) + '</sup>',
+    'T-gate scaling in Re, best case (N<sub>C</sub>=2, overlap task)');
+  if (worst) stat(host, 'Re<sup>' + worst.exponent.toFixed(2) + '</sup>',
+    'T-gate scaling in Re, worst case (N<sub>C</sub>=1, observable task)');
+  if (demo.n_qubits) stat(host, demo.n_qubits + ' qubits', 'end-to-end RET demonstrator instance');
+  if (demo.fourier_richardson_error !== undefined)
+    stat(host, sci(demo.fourier_richardson_error), 'residual bias of the Fourier + Richardson pipeline');
+
+  const gm = S.gate_model || {};
+  document.getElementById('gm').innerHTML =
+    gm.b_arith + '-bit arithmetic, ' + gm.T_per_toffoli + ' T per Toffoli, ' +
+    sci(gm.t_gate_seconds) + ' s per logical gate, failure probability δ = ' + g(gm.delta) +
+    '. “Serial” is one gate at a time; Figure 1 also shows the 1000-fold parallel figure.';
+
+  /* ---- resource table ---- */
+  const tb = document.querySelector('#points tbody');
+  const sel = ['f-nc', 'f-eps', 'f-task'].map(id => document.getElementById(id));
+  function drawPoints() {
+    const nc = sel[0].value, eps = sel[1].value, task = sel[2].value;
+    tb.textContent = '';
+    const shown = pts
+      .filter(p => (!nc || p.NC === +nc) &&
+                   (!eps || Math.abs(p.eps - +eps) < 1e-12) &&
+                   (!task || p.task === +task))
+      .sort((a, b) => a.NC - b.NC || a.Re - b.Re || b.eps - a.eps || a.task - b.task);
+    shown.forEach(p => {
+      row(tb, [
+        cell(p.NC + (p.extrapolated ? ' <span class="tag">extrap</span>' : '')),
+        cell(g(p.Re), 'n'), cell(p.N, 'n'), cell(p.Nt, 'n'),
+        cell(epsLabel(p.eps), 'n'), cell(p.task, 'n'),
+        cell(g(p.kappa), 'n'), cell(g(p.Lambda), 'n'), cell(g(p.alpha3), 'n'),
+        cell(p.n_sys, 'n'), cell(p.logical_qubits, 'n'),
+        cell(sci(p.T_total), 'n'), cell(sci(p.samples), 'n'),
+        cell(sci(p.time_serial_s / YEAR), 'n'), cell(sci(p.schro_T_total), 'n')
+      ]);
+    });
+    document.getElementById('rowcount').textContent = shown.length + ' of ' + pts.length + ' points';
+  }
+  sel.forEach(s => s.addEventListener('change', drawPoints));
+  drawPoints();
+
+  /* ---- N-fits ---- */
+  const fb = document.querySelector('#fits tbody');
+  Object.keys(tf).filter(k => !k.startsWith('Tscaling')).forEach(k => {
+    const v = tf[k];
+    const label = k.replace(/^NC(\d)_Re(\d+)$/, 'N<sub>C</sub>=$1, Re=$2');
+    const cells = [cell(label)];
+    ['kappa', 'Lambda', 'alpha2', 'alpha3', 'LambdaC'].forEach(key => {
+      cells.push(cell(v[key] ? 'N<sup>' + v[key].exponent.toFixed(2) + '</sup>' : '—', 'n'));
+    });
+    const any = v.kappa || v.Lambda || {};
+    cells.push(cell((any.N || []).join(', '), 'n'));
+    row(fb, cells);
+  });
+
+  const tfb = document.querySelector('#tfits tbody');
+  ['Tscaling_NC1_task1', 'Tscaling_NC1_task2', 'Tscaling_NC2_task1', 'Tscaling_NC2_task2']
+    .filter(k => tf[k]).forEach(k => {
+      const m = k.match(/NC(\d)_task(\d)/);
+      const label = 'N<sub>C</sub>=' + m[1] + ', task ' + m[2] +
+                    (m[2] === '1' ? ' — overlap' : ' — observable');
+      row(tfb, [cell(label),
+                cell('Re<sup>' + tf[k].exponent.toFixed(2) + '</sup>', 'n'),
+                cell(sci(tf[k].prefactor), 'n')]);
+    });
+
+  /* ---- error scaling ---- */
+  const err = S.error || {};
+  document.getElementById('gridrule').textContent = err.grid_rule || '';
+  document.getElementById('eta').textContent = g(err.eta, 5);
+  const eb = document.querySelector('#errs tbody');
+  (err.cases || []).forEach(c => {
+    row(eb, [
+      cell(g(c.Re), 'n'), cell(c.N, 'n'), cell(c.Nt, 'n'),
+      cell(sci(c.l2_err_T), 'n'), cell(sci(c.ke_err_T), 'n'),
+      cell(c.decay_rate_fit.toFixed(4), 'n'), cell(c.decay_rate_exact.toFixed(4), 'n'),
+      cell(c.at_grid_rule ? '<span class="tag">on rule</span>' : '')
+    ]);
+  });
+
+  const pb = document.querySelector('#perts tbody');
+  (err.perturbed || []).forEach(r => {
+    row(pb, [
+      cell(g(r.Re), 'n'), cell(r.N, 'n'), cell(Math.round(r.perturb * 100) + '%', 'n'),
+      cell(sci(r.NC1_rel_l2), 'n'), cell(sci(r.NC2_rel_l2), 'n'),
+      cell(g(r.NC2_ke_ratio, 4), 'n'), cell(g(r.ref_ke_ratio, 4), 'n')
+    ]);
+  });
+
+  /* ---- demonstrator ---- */
+  const dh = document.getElementById('demostats');
+  if (demo.n_qubits) {
+    const R = demo.richardson || {};
+    stat(dh, demo.n_qubits, 'qubits (N=' + demo.N + ', Re=' + g(demo.Re) +
+                            ', N<sub>C</sub>=' + demo.NC + ', dimension ' + demo.dim + ')');
+    stat(dh, g(demo.kappa), 'condition number κ of the space-time operator');
+    stat(dh, sci(demo.K_fourier, 0), 'terms K in the CKS Fourier series for 1/x');
+    stat(dh, g(demo.c_l1), 'ℓ₁ norm c of the series coefficients');
+    stat(dh, sci(R.max_trotter_steps, 0), 'Trotter steps at the longest Richardson time');
+    stat(dh, 'm = ' + R.m, 'Richardson points, ‖b‖₁ = ' + g(R.b_norm1) + ', r₀ = ' + sci(R.r0, 0));
+    stat(dh, g(demo.target_abs, 4), 'target ‖L‖⟨φ|L⁻¹b⟩');
+    stat(dh, sci(demo.fourier_richardson_error), 'bias of the noiseless Fourier + Richardson estimate');
+  }
+  const db = document.querySelector('#demosamples tbody');
+  const ev = demo.estimate_vs_samples || {}, errv = demo.error_vs_samples || {};
+  Object.keys(ev).map(Number).sort((a, b) => a - b).forEach(n => {
+    row(db, [
+      cell(sci(n, 0), 'n'), cell(g(ev[n][0], 4), 'n'), cell(g(ev[n][1], 4), 'n'),
+      cell(sci(errv[n]), 'n')
+    ]);
+  });
+}
+</script>
+</body>
+</html>
